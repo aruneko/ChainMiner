@@ -36,11 +36,44 @@ fun Block.isOre(): Boolean {
     return ores.contains(this.type)
 }
 
-fun Block.findVein(foundOres: List<Block>): List<Block> {
-    val around = this.getAround().extractEquals(this).filter { !foundOres.map { f -> f.type }.contains(it.type) }
-    return if (around.isEmpty()) {
-        foundOres
-    } else {
-        around.flatMap { it.findVein(around) }
+fun Block.findVein(): List<Block> {
+    val paths = ArrayDeque<ArrayDeque<Block>>()
+    val foundBlocks = ArrayDeque<Block>()
+    var target = this
+    while (true) {
+        // まず対象になっているブロックを探索済みにする
+        foundBlocks.addFirst(target)
+        // 周囲の破壊対象ブロックを取得する
+        val around = ArrayDeque(
+            target.getAround().extractEquals(target).filterNot {
+                // ただし探索済みおよび経路として追加済みのブロックは外す
+                foundBlocks.contains(it) || paths.flatten().contains(it)
+            }
+        )
+        // 周囲に何もない = 木構造の先端まで来たとき
+        if (around.isEmpty()) {
+            // 未探索のノードを取得
+            val path = paths.removeFirstOrNull()
+            if (path == null) {
+                // 未探索のノードがなければ終了
+                break
+            } else {
+                // 未探索の経路を持つノードがあればそのうちのひとつを次の対象とする
+                target = path.removeFirst()
+                if (path.isNotEmpty()) {
+                    // ただし残りの経路は未探索のものとして残しておく
+                    paths.addFirst(path)
+                }
+                continue
+            }
+        }
+        // 木構造の途中にあるとき
+        // 周囲のブロックからひとつ取ってくる
+        target = around.removeFirst()
+        if (around.isNotEmpty()) {
+            // 周囲のブロックが残っていれば未探索の経路として登録
+            paths.addFirst(around)
+        }
     }
+    return foundBlocks.toList()
 }
