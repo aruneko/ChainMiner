@@ -5,38 +5,19 @@ import org.bukkit.block.Block
 
 fun Block.getAround(): List<Block> {
     val world = this.world
-    val x = this.x
-    val y = this.y
-    val z = this.z
+    val blockX = this.x
+    val blockY = this.y
+    val blockZ = this.z
 
-    return listOf(
-        world.getBlockAt(x - 1, y + 1, z - 1),
-        world.getBlockAt(x, y + 1, z - 1),
-        world.getBlockAt(x + 1, y + 1, z - 1),
-        world.getBlockAt(x - 1, y + 1, z),
-        world.getBlockAt(x, y + 1, z),
-        world.getBlockAt(x + 1, y + 1, z),
-        world.getBlockAt(x - 1, y + 1, z + 1),
-        world.getBlockAt(x, y + 1, z + 1),
-        world.getBlockAt(x + 1, y + 1, z + 1),
-        world.getBlockAt(x - 1, y, z - 1),
-        world.getBlockAt(x, y, z - 1),
-        world.getBlockAt(x + 1, y, z - 1),
-        world.getBlockAt(x - 1, y, z),
-        world.getBlockAt(x + 1, y, z),
-        world.getBlockAt(x - 1, y, z + 1),
-        world.getBlockAt(x, y, z + 1),
-        world.getBlockAt(x + 1, y, z + 1),
-        world.getBlockAt(x - 1, y - 1, z - 1),
-        world.getBlockAt(x, y - 1, z - 1),
-        world.getBlockAt(x + 1, y - 1, z - 1),
-        world.getBlockAt(x - 1, y - 1, z),
-        world.getBlockAt(x, y - 1, z),
-        world.getBlockAt(x + 1, y - 1, z),
-        world.getBlockAt(x - 1, y - 1, z + 1),
-        world.getBlockAt(x, y - 1, z + 1),
-        world.getBlockAt(x + 1, y - 1, z + 1),
-    )
+    val xs = listOf(blockX - 1, blockX, blockX + 1)
+    val ys = listOf(blockY - 1, blockY, blockY + 1)
+    val zs = listOf(blockZ - 1, blockZ, blockZ + 1)
+
+    return xs.flatMap { x ->
+        ys.flatMap {
+            y -> zs.map { z -> world.getBlockAt(x, y, z) }
+        }
+    }.filter { !(it.x == blockX && it.y == blockY && it.z == blockX) }
 }
 
 fun Block.isOre(): Boolean {
