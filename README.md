@@ -3,9 +3,9 @@
 いわゆる鉱石の一括採掘機能を追加する。Spigot用プラグインです。
 
 ## (動作|作成)環境
-- Spigot 1.16.5
+- Spigot 1.17.1
 - Java 1.8
-- Kotlin 1.4.30
+- Kotlin 1.5.30
 
 ## How To Build
 以下のコマンドを入力すると、`build/libs/`以下にjarファイルができあがります。
