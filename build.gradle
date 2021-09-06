@@ -1,9 +1,9 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.4.30'
+    id 'org.jetbrains.kotlin.jvm' version "${kotlin_version}"
 }
 
 group 'net.aruneko'
-version '1.0.0'
+version '1.1.0'
 
 repositories {
     mavenCentral()
@@ -12,12 +12,8 @@ repositories {
     }
 }
 
-ext {
-    mc_version = "1.16.5"
-}
-
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
     compileOnly "org.spigotmc:spigot-api:${mc_version}-R0.1-SNAPSHOT"
 }
 
