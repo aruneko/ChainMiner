@@ -4,6 +4,7 @@ import net.aruneko.chainminer.extensions.findVein
 import net.aruneko.chainminer.extensions.isOre
 import net.aruneko.chainminer.extensions.sortByDistance
 import org.bukkit.Server
+import org.bukkit.Tag.MINEABLE_PICKAXE
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -16,18 +17,21 @@ class ChainMinerListener(private val plugin: Plugin, private val server: Server)
         val mainHandItem = player.inventory.itemInMainHand
 
         if (!player.isSneaking) {
+            // スニークしてなかったらやめる
             return
         }
 
         val block = event.block
 
-        if (!block.isPreferredTool(mainHandItem)) {
+        if (!block.isPreferredTool(mainHandItem) || !MINEABLE_PICKAXE.isTagged(block.type)) {
+            // 適正ツールじゃなかったらやめる
             return
         }
 
         val drops = block.getDrops(mainHandItem, player)
 
         if (!block.isOre(drops)) {
+            // 鉱石じゃなかったらやめる
             return
         }
 
