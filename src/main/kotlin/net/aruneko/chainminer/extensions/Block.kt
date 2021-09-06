@@ -1,7 +1,8 @@
 package net.aruneko.chainminer.extensions
 
-import org.bukkit.Material
 import org.bukkit.block.Block
+import org.bukkit.inventory.ItemStack
+import kotlin.collections.ArrayDeque
 
 fun Block.getAround(): List<Block> {
     val world = this.world
@@ -20,20 +21,9 @@ fun Block.getAround(): List<Block> {
     }.filter { !(it.x == blockX && it.y == blockY && it.z == blockX) }
 }
 
-fun Block.isOre(): Boolean {
-    val ores = listOf(
-        Material.REDSTONE_ORE,
-        Material.NETHER_GOLD_ORE,
-        Material.NETHER_QUARTZ_ORE,
-        Material.LAPIS_ORE,
-        Material.IRON_ORE,
-        Material.GOLD_ORE,
-        Material.EMERALD_ORE,
-        Material.DIAMOND_ORE,
-        Material.COAL_ORE,
-        Material.ANCIENT_DEBRIS,
-    )
-    return ores.contains(this.type)
+fun Block.isOre(drops: Collection<ItemStack>): Boolean {
+    // 雑にブロック本体とドロップするアイテムが違っていれば鉱石だと見なす
+    return drops.any { it.type != this.type }
 }
 
 fun Block.findVein(): List<Block> {

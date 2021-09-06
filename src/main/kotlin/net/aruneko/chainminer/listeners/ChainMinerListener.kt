@@ -25,7 +25,9 @@ class ChainMinerListener(private val plugin: Plugin, private val server: Server)
             return
         }
 
-        if (!block.isOre()) {
+        val drops = block.getDrops(mainHandItem, player)
+
+        if (!block.isOre(drops)) {
             return
         }
 
