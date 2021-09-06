@@ -2,7 +2,6 @@ package net.aruneko.chainminer.listeners
 
 import net.aruneko.chainminer.extensions.findVein
 import net.aruneko.chainminer.extensions.isOre
-import net.aruneko.chainminer.extensions.isPickaxe
 import net.aruneko.chainminer.extensions.sortByDistance
 import org.bukkit.Server
 import org.bukkit.event.EventHandler
@@ -20,11 +19,11 @@ class ChainMinerListener(private val plugin: Plugin, private val server: Server)
             return
         }
 
-        if (!mainHandItem.isPickaxe()) {
+        val block = event.block
+
+        if (!block.isPreferredTool(mainHandItem)) {
             return
         }
-
-        val block = event.block
 
         if (!block.isOre()) {
             return
