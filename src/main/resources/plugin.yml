@@ -1,4 +1,4 @@
 name: ChainMiner
 main: net.aruneko.chainminer.ChainMiner
-version: 1.0.0
-api-version: 1.16
+version: 1.1.1
+api-version: 1.17
