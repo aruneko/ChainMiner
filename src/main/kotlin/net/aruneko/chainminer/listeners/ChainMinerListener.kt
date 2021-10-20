@@ -28,9 +28,7 @@ class ChainMinerListener(private val plugin: Plugin, private val server: Server)
             return
         }
 
-        val drops = block.getDrops(mainHandItem, player)
-
-        if (!block.isOre(drops)) {
+        if (!block.isOre()) {
             // 鉱石じゃなかったらやめる
             return
         }
