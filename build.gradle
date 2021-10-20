@@ -7,14 +7,15 @@ version '1.1.1'
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
-    compileOnly "org.spigotmc:spigot-api:${mc_version}-R0.1-SNAPSHOT"
+    compileOnly "org.spigotmc:spigot:${mc_version}-R0.1-SNAPSHOT"
 }
 
 compileKotlin {
